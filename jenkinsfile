@@ -1,0 +1,29 @@
+pipeline {
+    agent any 
+    stages {
+        stage('fetching code') {
+            steps {
+               git branch: 'main', url: 'https://github.com/awadhutvaishu/first-html-app.git'
+            }
+        }
+        stage('install apache2') {
+    steps {
+        script {
+            sh '''
+            echo YOUR_PASSWORD | sudo -S apt update
+            echo YOUR_PASSWORD | sudo -S apt install apache2 -y
+            '''
+        }
+    }
+}
+
+        stage('deploy application') {
+    steps {
+        script {
+            sh 'sudo cp -R index.html /var/www/html/'
+        }
+    }
+}
+
+    }
+}
